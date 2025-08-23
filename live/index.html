@@ -52,7 +52,7 @@
       border-radius: 12px;
       display: flex;
       flex-direction: column;
-      height: 400px;  /* 평소 크기 */
+      height: 400px;  /* 기본 높이 (PC/모바일 공통) */
       transition: height 0.3s ease;
     }
     #chat-messages {
@@ -83,12 +83,6 @@
       border: none;
       background: #28a745;
       color: white;
-    }
-
-    @media (max-width: 768px) {
-      #chat-container {
-        height: 300px;
-      }
     }
   </style>
 </head>
@@ -183,17 +177,23 @@
       }
     });
 
-    // ✅ 입력 시 채팅창이 방송 뒤로 일부 들어가게
+    // ✅ 모바일 전용: 입력 시 채팅창 줄여서 방송 밑으로 일부 들어가게
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
     const chatInput = document.getElementById("chat-input");
     const chatContainer = document.getElementById("chat-container");
 
-    chatInput.addEventListener("focus", () => {
-      chatContainer.style.height = "150px"; // 좁아지면서 방송 뒤 일부 들어감
-    });
+    if (isMobile()) {
+      chatInput.addEventListener("focus", () => {
+        chatContainer.style.height = "150px"; // 좁게, 방송은 그대로 보임
+      });
 
-    chatInput.addEventListener("blur", () => {
-      chatContainer.style.height = "400px"; // 원래 크기로 복귀
-    });
+      chatInput.addEventListener("blur", () => {
+        chatContainer.style.height = "400px"; // 원래 크기 복귀
+      });
+    }
   </script>
 </body>
 </html>
