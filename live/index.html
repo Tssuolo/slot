@@ -27,7 +27,7 @@
       position: relative;
     }
 
-    /* 방송 플레이어 (평소엔 홈박스 아래 위치) */
+    /* 방송 플레이어 */
     .player-sticky {
       width: 50%;
       max-width: 1300px;
@@ -75,6 +75,7 @@
       display: flex;
       flex-direction: column;
       height: 400px;
+      box-sizing: border-box;
     }
     #chat-messages {
       flex: 1;
@@ -213,26 +214,26 @@
       }
     });
 
-    // ✅ 입력창 focus 시 방송화면 상단 고정
-    const chatInput = document.getElementById("chat-input");
-    const player = document.querySelector(".player-sticky");
+    // ✅ 모바일 키보드 대응 (PC에서는 동작 안 함)
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
 
-    chatInput.addEventListener("focus", () => {
-      player.style.position = "fixed";
-      player.style.top = "0";
-      player.style.left = "0";
-      player.style.width = "100%";
-      player.style.zIndex = "1000";
-    });
+    if (isMobile() && window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        const viewportHeight = window.visualViewport.height;
+        const windowHeight = window.innerHeight;
 
-    // ✅ 입력창 blur 시 원래 위치로 복귀
-    chatInput.addEventListener("blur", () => {
-      player.style.position = "sticky";
-      player.style.top = "0";
-      player.style.left = "";
-      player.style.width = "";
-      player.style.zIndex = "999";
-    });
+        // 키보드 올라온 경우
+        if (viewportHeight < windowHeight) {
+          document.getElementById("chat-container").style.paddingBottom =
+            (windowHeight - viewportHeight + 60) + "px";
+        } else {
+          // 키보드 내려가면 원상복귀
+          document.getElementById("chat-container").style.paddingBottom = "10px";
+        }
+      });
+    }
   </script>
 </body>
 </html>
