@@ -43,7 +43,7 @@
       border: none;
     }
 
-    /* 채팅창 */
+    /* 채팅 박스 */
     #chat-container {
       max-width: 650px;
       margin: 20px auto;
@@ -52,8 +52,7 @@
       border-radius: 12px;
       display: flex;
       flex-direction: column;
-      height: 400px;  /* 기본 높이 (PC/모바일 공통) */
-      transition: height 0.3s ease;
+      height: 400px;
     }
     #chat-messages {
       flex: 1;
@@ -177,22 +176,46 @@
       }
     });
 
-    // ✅ 모바일 전용: 입력 시 채팅창 줄여서 방송 밑으로 일부 들어가게
+    // ✅ 모바일 전용: 입력창이 키보드 위로 올라오게
     function isMobile() {
       return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
     const chatInput = document.getElementById("chat-input");
-    const chatContainer = document.getElementById("chat-container");
+    const chatInputArea = document.getElementById("chat-input-area");
 
-    if (isMobile()) {
+    if (isMobile() && window.visualViewport) {
       chatInput.addEventListener("focus", () => {
-        chatContainer.style.height = "150px"; // 좁게, 방송은 그대로 보임
+        window.visualViewport.addEventListener("resize", adjustForKeyboard);
       });
 
       chatInput.addEventListener("blur", () => {
-        chatContainer.style.height = "400px"; // 원래 크기 복귀
+        window.visualViewport.removeEventListener("resize", adjustForKeyboard);
+        // 원래 자리로 복귀
+        chatInputArea.style.position = "static";
+        chatInputArea.style.bottom = "auto";
+        chatInputArea.style.width = "100%";
       });
+
+      function adjustForKeyboard() {
+        const viewportHeight = window.visualViewport.height;
+        const windowHeight = window.innerHeight;
+
+        if (viewportHeight < windowHeight) {
+          // 키보드 올라온 상태 → 입력창을 fixed로 이동
+          chatInputArea.style.position = "fixed";
+          chatInputArea.style.bottom = "0px";
+          chatInputArea.style.left = "0";
+          chatInputArea.style.right = "0";
+          chatInputArea.style.width = "100%";
+          chatInputArea.style.zIndex = "2000";
+        } else {
+          // 키보드 내려옴 → 원래 자리
+          chatInputArea.style.position = "static";
+          chatInputArea.style.bottom = "auto";
+          chatInputArea.style.width = "100%";
+        }
+      }
     }
   </script>
 </body>
