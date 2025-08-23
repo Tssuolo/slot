@@ -53,6 +53,7 @@
       display: flex;
       flex-direction: column;
       height: 400px;
+      transition: all 0.3s ease;
     }
     #chat-messages {
       flex: 1;
@@ -176,13 +177,13 @@
       }
     });
 
-    // ✅ 모바일 전용: 입력창이 키보드 위로 올라오게
+    // ✅ 모바일 전용: 채팅 박스 전체가 방송 밑으로 올라가고 입력창은 키보드 위
     function isMobile() {
       return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
     const chatInput = document.getElementById("chat-input");
-    const chatInputArea = document.getElementById("chat-input-area");
+    const chatContainer = document.getElementById("chat-container");
 
     if (isMobile() && window.visualViewport) {
       chatInput.addEventListener("focus", () => {
@@ -192,9 +193,11 @@
       chatInput.addEventListener("blur", () => {
         window.visualViewport.removeEventListener("resize", adjustForKeyboard);
         // 원래 자리로 복귀
-        chatInputArea.style.position = "static";
-        chatInputArea.style.bottom = "auto";
-        chatInputArea.style.width = "100%";
+        chatContainer.style.position = "static";
+        chatContainer.style.bottom = "auto";
+        chatContainer.style.width = "100%";
+        chatContainer.style.maxWidth = "650px";
+        chatContainer.style.margin = "20px auto";
       });
 
       function adjustForKeyboard() {
@@ -202,18 +205,21 @@
         const windowHeight = window.innerHeight;
 
         if (viewportHeight < windowHeight) {
-          // 키보드 올라온 상태 → 입력창을 fixed로 이동
-          chatInputArea.style.position = "fixed";
-          chatInputArea.style.bottom = "0px";
-          chatInputArea.style.left = "0";
-          chatInputArea.style.right = "0";
-          chatInputArea.style.width = "100%";
-          chatInputArea.style.zIndex = "2000";
+          // 키보드 올라온 상태 → 채팅 박스를 fixed로 전환
+          chatContainer.style.position = "fixed";
+          chatContainer.style.bottom = "0px"; // 키보드 위
+          chatContainer.style.left = "0";
+          chatContainer.style.right = "0";
+          chatContainer.style.width = "100%";
+          chatContainer.style.margin = "0";
+          chatContainer.style.zIndex = "2000";
         } else {
           // 키보드 내려옴 → 원래 자리
-          chatInputArea.style.position = "static";
-          chatInputArea.style.bottom = "auto";
-          chatInputArea.style.width = "100%";
+          chatContainer.style.position = "static";
+          chatContainer.style.bottom = "auto";
+          chatContainer.style.width = "100%";
+          chatContainer.style.maxWidth = "650px";
+          chatContainer.style.margin = "20px auto";
         }
       }
     }
