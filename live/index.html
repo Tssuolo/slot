@@ -27,19 +27,19 @@
       position: relative;
     }
 
-    /* 방송 플레이어 */
+    /* 방송 플레이어 (평소엔 홈박스 아래 위치) */
     .player-sticky {
       width: 50%;
       max-width: 1300px;
       margin: 10px auto;
       aspect-ratio: 16 / 9;
-      position: -webkit-sticky;
       position: sticky;
       top: 0;
       z-index: 999;
       overflow: hidden;
       border-radius: 12px;
       background: #000;
+      transition: all 0.3s ease;
     }
     .player-sticky iframe {
       width: 100%;
@@ -60,7 +60,6 @@
         width: 100%;
         height: auto;
         min-height: 220px;
-        border-radius: 0;
       }
     }
 
@@ -76,40 +75,25 @@
       display: flex;
       flex-direction: column;
       height: 400px;
-      padding-bottom: 60px; /* 입력창 높이만큼 확보 */
-      box-sizing: border-box;
     }
     #chat-messages {
       flex: 1;
       overflow-y: auto;
       padding: 5px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 10px;
       font-size: 16px;
-    }
-
-    /* 입력창 고정 */
-    #chat-input-area {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #222;
-      padding: 8px;
-      display: flex;
-      z-index: 2000;
-      box-sizing: border-box;
-      padding-bottom: calc(8px + env(safe-area-inset-bottom)); /* iOS 노치 대응 */
-      border-top: 2px solid #0f0;
     }
     #chat-input {
       flex: 1;
-      padding: 10px;
+      padding: 8px;
       border-radius: 8px;
       border: none;
       outline: none;
       font-size: 16px; /* iOS 확대 방지 */
     }
-    #chat-input-area button {
-      padding: 10px 15px;
+    #chat-container button {
+      padding: 8px 15px;
       margin-left: 5px;
       border-radius: 8px;
       border: none;
@@ -118,12 +102,18 @@
       cursor: pointer;
     }
 
-    /* 모바일 */
     @media (max-width: 768px) {
       #chat-container {
         margin-top: 10px;
         height: 300px !important;
         max-height: 40vh;
+      }
+      #chat-messages {
+        flex: 1;
+        overflow-y: auto;
+      }
+      input, textarea {
+        font-size: 16px !important; /* iOS 확대 방지 */
       }
     }
   </style>
@@ -164,12 +154,10 @@
   <!-- Firebase 실시간 채팅 -->
   <div id="chat-container">
     <div id="chat-messages"></div>
-  </div>
-
-  <!-- 입력창 (화면 하단 고정) -->
-  <div id="chat-input-area">
-    <input id="chat-input" placeholder="메시지를 입력하세요..."/>
-    <button onclick="sendMessage()">전송</button>
+    <div style="display:flex; margin-top:8px;">
+      <input id="chat-input" placeholder="메시지를 입력하세요..."/>
+      <button onclick="sendMessage()">전송</button>
+    </div>
   </div>
 
   <script type="module">
@@ -223,6 +211,27 @@
         e.preventDefault();
         sendMessage();
       }
+    });
+
+    // ✅ 입력창 focus 시 방송화면 상단 고정
+    const chatInput = document.getElementById("chat-input");
+    const player = document.querySelector(".player-sticky");
+
+    chatInput.addEventListener("focus", () => {
+      player.style.position = "fixed";
+      player.style.top = "0";
+      player.style.left = "0";
+      player.style.width = "100%";
+      player.style.zIndex = "1000";
+    });
+
+    // ✅ 입력창 blur 시 원래 위치로 복귀
+    chatInput.addEventListener("blur", () => {
+      player.style.position = "sticky";
+      player.style.top = "0";
+      player.style.left = "";
+      player.style.width = "";
+      player.style.zIndex = "999";
     });
   </script>
 </body>
