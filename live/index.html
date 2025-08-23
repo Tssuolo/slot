@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>무료슬롯 - 최신 온라인 슬롯 게임 모음</title>
 
   <!-- CSS -->
@@ -54,13 +54,13 @@
         width: 100%;
         margin: 0;
         border-radius: 0;
-        aspect-ratio: auto;       /* ✅ 비율 강제 해제 */
+        aspect-ratio: auto;
         height: auto;
       }
       .player-sticky iframe {
         width: 100%;
-        height: auto;             /* ✅ 높이 자동 */
-        min-height: 220px;        /* ✅ 최소 높이 확보 (필요시 조정) */
+        height: auto;
+        min-height: 220px;
         border-radius: 0;
       }
     }
@@ -92,7 +92,7 @@
       border-radius: 8px;
       border: none;
       outline: none;
-      font-size: 16px;   /* ✅ 모바일 확대 방지 */
+      font-size: 16px; /* iOS 확대 방지 */
     }
     #chat-container button {
       padding: 8px 15px;
@@ -103,47 +103,41 @@
       color: white;
       cursor: pointer;
     }
-  
-/* === 모바일 방송 플레이어: 홈3박스 아래에서 sticky, 채팅창은 아래 === */
-@media (max-width: 768px) {
-  #homeSection {
-    position: relative;
-    z-index: 1001; /* 홈 박스 위로 */
-  }
 
-  .player-sticky {
-    position: sticky;   /* fixed 대신 sticky */
-    top: 0;
-    width: 100% !important;
-    margin: 0;
-    border-radius: 0;
-    z-index: 1000;
-    background: #000;
-  }
-
-  .player-sticky iframe {
-    width: 100%;
-    height: auto;
-    min-height: 220px;
-  }
-
-  #chat-container {
-    margin-top: 10px;   /* 방송 플레이어 바로 아래 */
-    height: 300px !important;
-    max-height: 40vh;
-  }
-
-  #chat-messages {
-    flex: 1;
-    overflow-y: auto;
-  }
-
-  input, textarea {
-    font-size: 16px !important; /* iOS 확대 방지 */
-  }
-}
-
-</style>
+    /* === 모바일: 방송 위, 채팅 아래 === */
+    @media (max-width: 768px) {
+      #homeSection {
+        position: relative;
+        z-index: 1001;
+      }
+      .player-sticky {
+        position: sticky;
+        top: 0;
+        width: 100% !important;
+        margin: 0;
+        border-radius: 0;
+        z-index: 1000;
+        background: #000;
+      }
+      .player-sticky iframe {
+        width: 100%;
+        height: auto;
+        min-height: 220px;
+      }
+      #chat-container {
+        margin-top: 10px;
+        height: 300px !important;
+        max-height: 40vh;
+      }
+      #chat-messages {
+        flex: 1;
+        overflow-y: auto;
+      }
+      input, textarea {
+        font-size: 16px !important; /* iOS 확대 방지 */
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -231,16 +225,22 @@
       msgBox.appendChild(div);
       msgBox.scrollTop = msgBox.scrollHeight;
     });
-  
 
-// 채팅 엔터 전송 (Shift+Enter 줄바꿈)
-document.getElementById("chat-input").addEventListener("keydown", function(e) {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
-});
+    // 채팅 엔터 전송 (Shift+Enter 줄바꿈)
+    document.getElementById("chat-input").addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
 
-</script>
+    // ✅ 모바일 키보드 대응: 입력창 포커스 시 스크롤 보정
+    const chatInput = document.getElementById("chat-input");
+    chatInput.addEventListener("focus", () => {
+      setTimeout(() => {
+        chatInput.scrollIntoView({ behavior: "smooth", block: "end" });
+      }, 300);
+    });
+  </script>
 </body>
 </html>
