@@ -5,41 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>무료슬롯 - 최신 온라인 슬롯 게임 모음</title>
 
-  <!-- CSS -->
   <link href="./templatemo-glossy-touch.css" rel="stylesheet"/>
 
   <style>
+    /* 홈 박스 */
     .features {
       display: grid;
       grid-template-columns: repeat(3, 1fr) !important;
       gap: 10px;
       max-width: 1300px;
       margin: 30px auto;
-      padding: 0px 0;
       text-align: center;
     }
     .features .feature-card {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16/9;
       border-radius: 15px;
       background-size: cover;
       background-position: center;
-      position: relative;
     }
 
-    /* 방송 플레이어 */
+    /* 방송 박스 */
     .player-sticky {
-      width: 50%;
+      width: 100%;
       max-width: 1300px;
       margin: 10px auto;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16/9;
       position: sticky;
       top: 0;
-      z-index: 999;
-      overflow: hidden;
-      border-radius: 12px;
       background: #000;
-      transition: all 0.3s ease;
+      border-radius: 12px;
+      z-index: 100;
     }
     .player-sticky iframe {
       width: 100%;
@@ -47,115 +43,88 @@
       border: none;
     }
 
-    /* 모바일 대응 */
-    @media (max-width: 768px) {
-      .player-sticky {
-        width: 100%;
-        margin: 0;
-        border-radius: 0;
-        aspect-ratio: auto;
-        height: auto;
-      }
-      .player-sticky iframe {
-        width: 100%;
-        height: auto;
-        min-height: 220px;
-      }
-    }
-
-    /* 채팅 UI */
+    /* 채팅창 */
     #chat-container {
       max-width: 650px;
       margin: 20px auto;
       background: #222;
       border: 2px solid #0f0;
       border-radius: 12px;
-      padding: 10px;
-      color: white;
       display: flex;
       flex-direction: column;
-      height: 400px;
-      box-sizing: border-box;
+      height: 400px;  /* 평소 크기 */
+      transition: height 0.3s ease;
     }
     #chat-messages {
       flex: 1;
       overflow-y: auto;
-      padding: 5px;
-      border-bottom: 1px solid #333;
-      margin-bottom: 10px;
+      padding: 8px;
+      color: white;
       font-size: 16px;
+    }
+    #chat-input-area {
+      display: flex;
+      padding: 8px;
+      border-top: 1px solid #333;
+      background: #111;
     }
     #chat-input {
       flex: 1;
-      padding: 8px;
+      padding: 10px;
       border-radius: 8px;
       border: none;
       outline: none;
-      font-size: 16px; /* iOS 확대 방지 */
+      font-size: 16px;
     }
-    #chat-container button {
-      padding: 8px 15px;
+    #chat-input-area button {
+      padding: 10px 15px;
       margin-left: 5px;
       border-radius: 8px;
       border: none;
       background: #28a745;
       color: white;
-      cursor: pointer;
     }
 
     @media (max-width: 768px) {
       #chat-container {
-        margin-top: 10px;
-        height: 300px !important;
-        max-height: 40vh;
-      }
-      #chat-messages {
-        flex: 1;
-        overflow-y: auto;
-      }
-      input, textarea {
-        font-size: 16px !important; /* iOS 확대 방지 */
+        height: 300px;
       }
     }
   </style>
 </head>
-
 <body>
-  <!-- 홈 3개 -->
+
+  <!-- 홈 박스 3개 -->
   <section class="features first-features" id="homeSection">
     <div>
       <a href="https://tssuolo.github.io/slot/live/index.html">
-        <div class="feature-card glass" style="background-image: url('./images/spinning-youtube.gif');"></div>
+        <div class="feature-card" style="background-image: url('./images/spinning-youtube.gif');"></div>
       </a>
       <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">생방송</div>
     </div>
     <div>
       <a href="https://tssuolo.github.io/slot/index.html">
-        <div class="feature-card glass" style="background-image: url('./images/olim.gif');"></div>
+        <div class="feature-card" style="background-image: url('./images/olim.gif');"></div>
       </a>
       <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">HOME</div>
     </div>
     <div>
       <a href="https://t.me/ARSLOT7" target="_blank">
-        <div class="feature-card glass" style="background-image: url('./images/tltl.gif'); background-size: contain; background-repeat: no-repeat;
-                        background-position: center; width: 250px; height: 150px; border-radius: 15px; overflow: hidden; position: relative;"></div>
+        <div class="feature-card" style="background-image: url('./images/tltl.gif'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
       </a>
       <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">가다호출</div>
     </div>
   </section>
 
-  <!-- 방송 플레이어 -->
+  <!-- 방송 -->
   <div class="player-sticky">
-    <iframe 
-      src="https://player.kick.com/3333slot?muted=true&autoplay=true" 
-      allowfullscreen>
-    </iframe>
+    <iframe src="https://player.kick.com/3333slot?muted=true&autoplay=true" allowfullscreen></iframe>
   </div>
 
-  <!-- Firebase 실시간 채팅 -->
+  <!-- 채팅 -->
   <div id="chat-container">
     <div id="chat-messages"></div>
-    <div style="display:flex; margin-top:8px;">
+    <div id="chat-input-area">
       <input id="chat-input" placeholder="메시지를 입력하세요..."/>
       <button onclick="sendMessage()">전송</button>
     </div>
@@ -206,7 +175,7 @@
       msgBox.scrollTop = msgBox.scrollHeight;
     });
 
-    // 채팅 엔터 전송 (Shift+Enter 줄바꿈)
+    // 엔터로 전송
     document.getElementById("chat-input").addEventListener("keydown", function(e) {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
@@ -214,26 +183,17 @@
       }
     });
 
-    // ✅ 모바일 키보드 대응 (PC에서는 동작 안 함)
-    function isMobile() {
-      return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    }
+    // ✅ 입력 시 채팅창이 방송 뒤로 일부 들어가게
+    const chatInput = document.getElementById("chat-input");
+    const chatContainer = document.getElementById("chat-container");
 
-    if (isMobile() && window.visualViewport) {
-      window.visualViewport.addEventListener("resize", () => {
-        const viewportHeight = window.visualViewport.height;
-        const windowHeight = window.innerHeight;
+    chatInput.addEventListener("focus", () => {
+      chatContainer.style.height = "150px"; // 좁아지면서 방송 뒤 일부 들어감
+    });
 
-        // 키보드 올라온 경우
-        if (viewportHeight < windowHeight) {
-          document.getElementById("chat-container").style.paddingBottom =
-            (windowHeight - viewportHeight + 60) + "px";
-        } else {
-          // 키보드 내려가면 원상복귀
-          document.getElementById("chat-container").style.paddingBottom = "10px";
-        }
-      });
-    }
+    chatInput.addEventListener("blur", () => {
+      chatContainer.style.height = "400px"; // 원래 크기로 복귀
+    });
   </script>
 </body>
 </html>
