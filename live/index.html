@@ -63,7 +63,9 @@
       color: white;
       display: flex;
       flex-direction: column;
-      height: 400px;
+      height: 320px;   /* ✅ 기존 400px → 20% 줄임 */
+      z-index: 2001;   /* ✅ 방송보다 위 */
+      position: relative;
     }
     #chat-messages {
       flex: 1;
@@ -134,7 +136,7 @@
         left: 0; right: 0; bottom: 0;
         width: 100%;
         height: 35vh; /* 하단 높이 */
-        z-index: 2000;
+        z-index: 1000; /* ✅ 채팅보다 뒤 */
         border-radius: 0;
       }
       .player-sticky.bottom iframe {
@@ -227,7 +229,7 @@
             const newName = prompt("새 닉네임을 입력하세요:", currentUser && currentUser.name ? currentUser.name : "");
             if (newName && newName.trim()) {
               const trimmed = newName.trim();
-              if (trimmed.length >= 9) {
+              if (trimmed.length >= 9) {  // ✅ 8자 제한
                 alert("닉네임은 8자만 가능합니다.");
                 return;
               }
