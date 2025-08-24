@@ -4,6 +4,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>무료슬롯 - 최신 온라인 슬롯 게임 모음</title>
+
+  <!-- CSS -->
   <link href="./templatemo-glossy-touch.css" rel="stylesheet"/>
 
   <style>
@@ -14,10 +16,9 @@
       font-family: sans-serif;
     }
 
-    /* 홈 3개 */
     .features {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr) !important;
       gap: 10px;
       max-width: 1300px;
       margin: 30px auto;
@@ -32,125 +33,165 @@
       position: relative;
     }
 
-    /* 방송 영역 */
-    .player-wrapper {
-      position: relative;
+    /* === PC 방송 플레이어 (50%) === */
+    .player-sticky {
+      width: 50%;
       max-width: 1300px;
-      margin: 0 auto;
+      margin: 10px auto;
+      aspect-ratio: 16 / 9;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #000;
     }
     .player-sticky iframe {
       width: 100%;
-      aspect-ratio: 16/9;
+      height: 100%;
       border: none;
+    }
+
+    /* === 채팅 UI === */
+    #chat-container {
+      max-width: 650px;
+      margin: 20px auto;
+      background: #222;
+      border: 2px solid #0f0;
       border-radius: 12px;
+      padding: 10px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 400px;
+    }
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 5px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    #chat-input-area {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border-top: 1px solid #333;
+      background: #111;
+    }
+    #change-name-btn {
+      flex: 0 0 36px;
+      height: 36px;
+      margin-right: 6px;
+      background: #444;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #change-name-btn:active { transform: scale(0.95); }
+    #chat-input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    #send-btn {
+      flex: 0 0 auto;
+      margin-left: 6px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      background: #28a745;
+      color: white;
     }
 
     /* === 모바일 전용 === */
     @media (max-width: 768px) {
-      /* 기본 방송 풀화면 */
       .player-sticky {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
         position: relative;
-        z-index: 100;
       }
       .player-sticky iframe {
         width: 100%;
         height: auto;
         min-height: 220px;
-        border-radius: 0;
       }
 
-      /* 미니 플레이어 모드 */
-      .player-sticky.mini {
+      /* 스크롤 내릴 때 하단 꽉차기 */
+      .player-sticky.bottom {
         position: fixed;
-        width: 240px;
-        height: 135px;
-        bottom: 10px;
-        right: 10px;
+        left: 0; right: 0; bottom: 0;
+        width: 100%;
+        height: 35vh; /* 하단 높이 */
         z-index: 2000;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        border-radius: 0;
       }
-      .player-sticky.mini iframe {
+      .player-sticky.bottom iframe {
         width: 100%;
         height: 100%;
-        min-height: auto;
-        border-radius: 0;
       }
 
-      /* 채팅은 모바일에서는 풀모드일 때만 */
-      #chat-container {
-        background: #111;
-        border-top: 2px solid #333;
-        padding: 6px;
-      }
+      /* 채팅 숨김 */
       #chat-container.hidden {
-        display: none;
-      }
-      #chat-messages {
-        max-height: 200px;
-        overflow-y: auto;
-        font-size: 14px;
-        margin-bottom: 6px;
-      }
-      #chat-input-area {
-        display: flex;
-        align-items: center;
-      }
-      #chat-input {
-        flex: 1;
-        padding: 8px;
-        border-radius: 6px;
-        border: none;
-        outline: none;
-        font-size: 15px;
-      }
-      #send-btn {
-        margin-left: 6px;
-        padding: 8px 12px;
-        border-radius: 6px;
-        border: none;
-        background: #28a745;
-        color: white;
+        display: none !important;
       }
     }
   </style>
 </head>
-<body>
 
+<body>
   <!-- 홈 3개 -->
-  <section class="features" id="homeSection">
+  <section class="features first-features" id="homeSection">
     <div>
-      <a href="#">
+      <a href="https://tssuolo.github.io/slot/live/index.html">
         <div class="feature-card glass" style="background-image: url('./images/spinning-youtube.gif');"></div>
       </a>
-      <div style="margin-top: 8px; font-size: 20px; font-weight: bold;">생방송</div>
+      <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">생방송</div>
     </div>
     <div>
-      <a href="#">
+      <a href="https://tssuolo.github.io/slot/index.html">
         <div class="feature-card glass" style="background-image: url('./images/olim.gif');"></div>
       </a>
-      <div style="margin-top: 8px; font-size: 20px; font-weight: bold;">HOME</div>
+      <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">HOME</div>
     </div>
     <div>
-      <a href="#">
-        <div class="feature-card glass" style="background-image: url('./images/tltl.gif'); background-size: contain; background-repeat: no-repeat; background-position: center; width: 250px; height: 150px; border-radius: 15px;"></div>
+      <a href="https://t.me/ARSLOT7" target="_blank">
+        <div class="feature-card glass" style="background-image: url('./images/tltl.gif'); background-size: contain; background-repeat: no-repeat;
+                        background-position: center; width: 250px; height: 150px; border-radius: 15px; overflow: hidden; position: relative;"></div>
       </a>
-      <div style="margin-top: 8px; font-size: 20px; font-weight: bold;">가다호출</div>
+      <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">가다호출</div>
     </div>
   </section>
 
-  <!-- 방송 + 채팅 -->
-  <div class="player-wrapper">
-    <div class="player-sticky" id="playerBox">
-      <iframe src="https://player.kick.com/3333slot?muted=true&autoplay=true" allowfullscreen></iframe>
-    </div>
-    <div id="chat-container">
-      <div id="chat-messages"></div>
-      <div id="chat-input-area">
-        <input id="chat-input" placeholder="메시지를 입력하세요..."/>
-        <button id="send-btn" onclick="sendMessage()">전송</button>
-      </div>
+  <!-- 방송 플레이어 -->
+  <div class="player-sticky" id="playerBox">
+    <iframe 
+      src="https://player.kick.com/3333slot?muted=true&autoplay=true" 
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Firebase 실시간 채팅 -->
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+    <div id="chat-input-area">
+      <!-- 닉네임 변경 버튼 -->
+      <button id="change-name-btn" title="닉네임 변경">⚙️</button>
+
+      <!-- 입력창 -->
+      <input id="chat-input" placeholder="메시지를 입력하세요..."/>
+      <button id="send-btn" onclick="sendMessage()">전송</button>
     </div>
   </div>
 
@@ -173,6 +214,32 @@
 
     const currentUser = { name: "손님" + Math.floor(Math.random()*1000), role: "user" };
 
+    // ✅ 닉네임 변경 버튼 기능
+    (function(){
+      try {
+        const savedName = localStorage.getItem("chat_name");
+        if (savedName && typeof currentUser === "object") {
+          currentUser.name = savedName;
+        }
+        const btn = document.getElementById("change-name-btn");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            const newName = prompt("새 닉네임을 입력하세요:", currentUser && currentUser.name ? currentUser.name : "");
+            if (newName && newName.trim()) {
+              const trimmed = newName.trim();
+              if (trimmed.length >= 9) {
+                alert("닉네임은 8자만 가능합니다.");
+                return;
+              }
+              currentUser.name = trimmed;
+              localStorage.setItem("chat_name", currentUser.name);
+              alert("닉네임이 '" + currentUser.name + "' 으로 변경되었습니다.");
+            }
+          });
+        }
+      } catch(e){ console.warn("닉네임 변경 오류", e); }
+    })();
+
     // 메시지 전송
     window.sendMessage = function() {
       const input = document.getElementById("chat-input");
@@ -191,31 +258,36 @@
       const data = snapshot.val();
       const msgBox = document.getElementById("chat-messages");
       const div = document.createElement("div");
-      div.textContent = data.name + ": " + data.text;
+
+      let roleTag = "";
+      if (data.role === "admin") roleTag = "<span style='color:red;font-weight:bold;'>[관리자]</span> ";
+      if (data.role === "manager") roleTag = "<span style='color:orange;font-weight:bold;'>[매니저]</span> ";
+
+      div.innerHTML = roleTag + "<b>" + data.name + "</b>: " + data.text;
       msgBox.appendChild(div);
       msgBox.scrollTop = msgBox.scrollHeight;
     });
 
-    // 엔터 전송
-    document.getElementById("chat-input").addEventListener("keydown", (e) => {
+    // 채팅 엔터 전송 (Shift+Enter 줄바꿈)
+    document.getElementById("chat-input").addEventListener("keydown", function(e) {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         sendMessage();
       }
     });
 
-    // 모바일에서 스크롤 이벤트 → 미니플레이어 토글
+    // ✅ 모바일 전용: 스크롤 이벤트로 방송/채팅 토글
     const playerBox = document.getElementById("playerBox");
     const chatContainer = document.getElementById("chat-container");
 
     window.addEventListener("scroll", () => {
       if (window.innerWidth <= 768) {
         if (window.scrollY > 200) {
-          playerBox.classList.add("mini");    // 미니 플레이어
+          playerBox.classList.add("bottom");   // 방송 하단 고정
           chatContainer.classList.add("hidden"); // 채팅 숨김
         } else {
-          playerBox.classList.remove("mini"); // 풀모드
-          chatContainer.classList.remove("hidden"); 
+          playerBox.classList.remove("bottom"); // 방송 원위치
+          chatContainer.classList.remove("hidden"); // 채팅 보임
         }
       }
     });
