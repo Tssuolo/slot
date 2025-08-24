@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>무료슬롯 - 최신 온라인 슬롯 게임 모음</title>
+
+  <!-- CSS -->
+  <link href="./templatemo-glossy-touch.css" rel="stylesheet"/>
+
+  <style>
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 10px;
+      max-width: 1300px;
+      margin: 30px auto;
+      padding: 0px 0;
+      text-align: center;
+    }
+    .features .feature-card {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 15px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    /* 방송 플레이어 */
+    .player-sticky {
+      width: 50%;
+      max-width: 1300px;
+      margin: 10px auto;
+      aspect-ratio: 16 / 9;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #000;
+    }
+    .player-sticky iframe {
+      width: 100%;
+      height: 100%;
+      transform: translate(0%, 0%);
+      border: none;
+    }
+
+    /* 모바일 대응 */
+    @media (max-width: 768px) {
+      .player-sticky {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        aspect-ratio: auto;       /* ✅ 비율 강제 해제 */
+        height: auto;
+      }
+      .player-sticky iframe {
+        width: 100%;
+        height: auto;             /* ✅ 높이 자동 */
+        min-height: 220px;        /* ✅ 최소 높이 확보 (필요시 조정) */
+        border-radius: 0;
+      }
+    }
+
+    /* 채팅 UI */
+    #chat-container {
+      max-width: 650px;
+      margin: 20px auto;
+      background: #222;
+      border: 2px solid #0f0;
+      border-radius: 12px;
+      padding: 10px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 400px;
+    }
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 5px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    #chat-input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 16px;   /* ✅ 모바일 확대 방지 */
+    }
+    #chat-container button {
+      padding: 8px 15px;
+      margin-left: 5px;
+      border-radius: 8px;
+      border: none;
+      background: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+  
+/* === 모바일 방송 플레이어: 홈3박스 아래에서 sticky, 채팅창은 아래 === */
+@media (max-width: 768px) {
+  #homeSection {
+    position: relative;
+    z-index: 1001; /* 홈 박스 위로 */
+  }
+
+  .player-sticky {
+    position: sticky;   /* fixed 대신 sticky */
+    top: 0;
+    width: 100% !important;
+    margin: 0;
+    border-radius: 0;
+    z-index: 1000;
+    background: #000;
+  }
+
+  .player-sticky iframe {
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+  }
+
+  #chat-container {
+    margin-top: 10px;   /* 방송 플레이어 바로 아래 */
+    height: 300px !important;
+    max-height: 40vh;
+  }
+
+  #chat-messages {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  input, textarea {
+    font-size: 16px !important; /* iOS 확대 방지 */
+  }
+}
+
+
+#chat-input-area {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-top: 1px solid #333;
+  background: #111;
+}
+#change-name-btn {
+  flex: 0 0 36px;
+  height: 36px;
+  margin-right: 6px;
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#change-name-btn:active { transform: scale(0.95); }
+#chat-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+#send-btn {
+  flex: 0 0 auto;
+  margin-left: 6px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  background: #28a745;
+  color: white;
+}
+
+
+/* ✅ 모바일 전용 방송+채팅 묶기 (visualViewport 대응) */
+@media (max-width: 768px) {
+  #live-chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 화면 꽉 채움 */
+    overflow: hidden;
+  }
+
+  .player-sticky {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 35vh;  /* 기본 방송 화면 비율 */
+    position: relative; /* sticky 제거 */
+  }
+
+  #chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  #chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 50px; /* 입력창 확보 */
+  }
+
+  #chat-input-area {
+    position: sticky;
+    bottom: 0;
+    background: #111;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <!-- 홈 3개 -->
+  <section class="features first-features" id="homeSection">
+    <div>
+      <a href="https://tssuolo.github.io/slot/live/index.html">
+        <div class="feature-card glass" style="background-image: url('./images/spinning-youtube.gif');"></div>
+      </a>
+      <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">생방송</div>
+    </div>
+    <div>
+      <a href="https://tssuolo.github.io/slot/index.html">
+        <div class="feature-card glass" style="background-image: url('./images/olim.gif');"></div>
+      </a>
+      <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">HOME</div>
+    </div>
+    <div>
+      <a href="https://t.me/ARSLOT7" target="_blank">
+        <div class="feature-card glass" style="background-image: url('./images/tltl.gif'); background-size: contain; background-repeat: no-repeat;
+                        background-position: center; width: 250px; height: 150px; border-radius: 15px; overflow: hidden; position: relative;"></div>
+      </a>
+      <div style="margin-top: 8px; font-size: 20px; font-weight: bold; color: white;">가다호출</div>
+    </div>
+  </section>
+
+  <!-- ✅ 모바일용 방송+채팅 wrapper 시작 -->
+<div id="live-chat-wrapper">
+  <!-- 방송 플레이어 -->
+  <div class="player-sticky">
+    <iframe 
+      src="https://player.kick.com/3333slot?muted=true&autoplay=true" 
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Firebase 실시간 채팅 -->
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+    
+<div style="display:flex; margin-top:8px; align-items:center;">
+  <!-- 닉네임 변경 버튼 -->
+  <button id="change-name-btn" title="닉네임 변경" 
+          style="margin-right:6px; width:36px; height:36px; border:none; border-radius:8px; background:#444; color:#fff; font-size:18px; cursor:pointer;">
+    ⚙️
+  </button>
+
+  <!-- 채팅 입력창 -->
+  <input id="chat-input" placeholder="메시지를 입력하세요..." style="flex:1; padding:8px; border-radius:8px; border:none; outline:none; font-size:16px;"/>
+
+  <!-- 전송 버튼 -->
+  <button onclick="sendMessage()">전송</button>
+</div>
+
+  </div>
+</div> <!-- ✅ live-chat-wrapper 끝 -->
+
+<script>
+if (window.visualViewport) {
+  const wrapper = document.getElementById("live-chat-wrapper");
+  const player = document.querySelector(".player-sticky");
+  const chat = document.getElementById("chat-container");
+
+  function adjustLayout() {
+    const vh = window.visualViewport.height;
+    wrapper.style.height = vh + "px";
+    player.style.height = Math.max(200, vh * 0.35) + "px";
+    chat.style.height = (vh - player.offsetHeight) + "px";
+  }
+
+  window.visualViewport.addEventListener("resize", adjustLayout);
+  window.addEventListener("orientationchange", adjustLayout);
+  adjustLayout();
+}
+</script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC5-TEST-KEY-1234567890abcdefg",
+      authDomain: "test-chat-demo.firebaseapp.com",
+      databaseURL: "https://test-chat-demo-default-rtdb.firebaseio.com",
+      projectId: "test-chat-demo",
+      storageBucket: "test-chat-demo.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef1234567890"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const currentUser = { name: "손님" + Math.floor(Math.random()*1000), role: "user" };
+
+
+// ✅ 닉네임 변경 버튼 기능
+(function(){
+  try {
+    const savedName = localStorage.getItem("chat_name");
+    if (savedName && typeof currentUser === "object") {
+      currentUser.name = savedName;
+    }
+    const btn = document.getElementById("change-name-btn");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        const newName = prompt("새 닉네임을 입력하세요:", currentUser && currentUser.name ? currentUser.name : "");
+        if (newName && newName.trim()) {
+          const trimmed = newName.trim();
+          // ✅ 전체 글자수 제한 (한글/영문/숫자 합산)
+          if (trimmed.length >= 9) {
+            alert("닉네임은 8자만 가능합니다.");
+            return;
+          }
+          currentUser.name = trimmed;
+          localStorage.setItem("chat_name", currentUser.name);
+          alert("닉네임이 '" + currentUser.name + "' 으로 변경되었습니다.");
+        }
+      });}
+  } catch(e){ console.warn("닉네임 변경 오류", e); }
+})();
+
+
+
+
+
+
+    window.sendMessage = function() {
+      const input = document.getElementById("chat-input");
+      if (!input.value.trim()) return;
+      push(ref(db, "chat"), {
+        name: currentUser.name,
+        role: currentUser.role,
+        text: input.value,
+        time: Date.now()
+      });
+      input.value = "";
+    }
+
+    onChildAdded(ref(db, "chat"), (snapshot) => {
+      const data = snapshot.val();
+      const msgBox = document.getElementById("chat-messages");
+      const div = document.createElement("div");
+
+      let roleTag = "";
+      if (data.role === "admin") roleTag = "<span style='color:red;font-weight:bold;'>[관리자]</span> ";
+      if (data.role === "manager") roleTag = "<span style='color:orange;font-weight:bold;'>[매니저]</span> ";
+
+      div.innerHTML = roleTag + "<b>" + data.name + "</b>: " + data.text;
+      msgBox.appendChild(div);
+      msgBox.scrollTop = msgBox.scrollHeight;
+    });
+  
+
+// 채팅 엔터 전송 (Shift+Enter 줄바꿈)
+document.getElementById("chat-input").addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+</script>
+</body>
+</html>
