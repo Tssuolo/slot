@@ -4820,13 +4820,87 @@ function filterCards() {
     슬롯 커뮤니티와 안전한 온라인 놀이터를 지향합니다.
   </p>
 </section>
-  <div id="footer">
-  <div id="visitor-counter" style="text-align:center; font-size:12px; color:#777; margin-top:40px; padding:10px 0;">
-    오늘 방문자수: <span id="today">-</span> | 
-    1일 평균 방문자수: <span id="avg">-</span> | 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>방문자 카운터 테스트</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      text-align: center;
+    }
+    #visitor-counter {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>방문자 카운터 테스트 페이지</h1>
+  <p>새로고침(F5) 할 때마다 숫자가 올라가야 정상입니다 ✅</p>
+
+  <!-- 방문자 카운터 영역 -->
+  <div id="visitor-counter">
+    오늘 방문자수: <span id="today">-</span> |
+    1일 평균 방문자수: <span id="avg">-</span> |
     총 방문자수: <span id="total">-</span>
   </div>
-</div>
+
+<script>
+// -------------------- 방문자 카운터 (테스트용: 매번 카운트) --------------------
+(function(){
+  var NAMESPACE = "mysite-2025-test123"; // 반드시 고유 문자열로 바꾸세요!
+  var todayKey = new Date().toISOString().slice(0,10).replace(/-/g,'');
+
+  function hit(key){
+    return fetch("https://api.countapi.xyz/hit/" + encodeURIComponent(NAMESPACE) + "/" + encodeURIComponent(key))
+      .then(r => r.json());
+  }
+  function get(key){
+    return fetch("https://api.countapi.xyz/get/" + encodeURIComponent(NAMESPACE) + "/" + encodeURIComponent(key))
+      .then(r => r.json());
+  }
+
+  // 총 방문자수 +1
+  hit("total").catch(()=>{});
+
+  // 오늘 방문자수 +1
+  hit(todayKey).then(res=>{
+    // 오늘 첫 방문이면 days +1
+    if (res && res.value === 1){
+      hit("days").catch(()=>{});
+    }
+  }).catch(()=>{});
+
+  // 값 불러오기 (표시용)
+  Promise.all([
+    get("total"),
+    get("days"),
+    get(todayKey)
+  ]).then(results=>{
+    var total = (results[0] && results[0].value) || 0;
+    var days  = (results[1] && results[1].value) || 0;
+    var today = (results[2] && results[2].value) || 0;
+    var avg   = days > 0 ? Math.round(total / days) : total;
+
+    document.getElementById("today").textContent = today.toLocaleString();
+    document.getElementById("total").textContent = total.toLocaleString();
+    document.getElementById("avg").textContent   = avg.toLocaleString();
+  }).catch(()=>{
+    document.getElementById("today").textContent = "오류";
+    document.getElementById("total").textContent = "오류";
+    document.getElementById("avg").textContent   = "오류";
+  });
+})();
+</script>
+
+</body>
+</html>
+
 
 
 
