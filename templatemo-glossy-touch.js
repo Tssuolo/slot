@@ -209,7 +209,7 @@ if (demoCards.length > 0) {
 
 // -------------------- 방문자 카운터 (하루 1회만 카운트) --------------------
 (function(){
-  var NAMESPACE = "CHANGE_THIS_NAMESPACE"; // 반드시 고유 문자열로 변경하세요
+  var NAMESPACE = "mysite-2025-Q99"; // 반드시 고유 문자열로 변경하세요
   var todayKey = new Date().toISOString().slice(0,10).replace(/-/g,''); // YYYYMMDD
 
   function hit(key){
