@@ -228,13 +228,12 @@ if (demoCards.length > 0) {
     // 총 방문자수 +1
     hit("total").catch(()=>{});
 
-    // 오늘 방문자수 +1
-    hit(todayKey).then(res=>{
-      // 오늘 첫 방문이면 days +1
-      if (res && res.value === 1){
-        hit("days").catch(()=>{});
-      }
-    }).catch(()=>{});
+  // 오늘 방문자수 +1
+  hit(todayKey).then(res=>{
+    if (res && res.value === 1){
+      hit("days").catch(()=>{});
+    }
+  }).catch(()=>{});
 
     // 오늘 카운트 기록 저장
     localStorage.setItem("visitorCountedDate", todayKey);
